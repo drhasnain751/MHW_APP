@@ -7,6 +7,10 @@ backend/.env
 mobile/.env
 frontend/.env
 
+# Local database and repo metadata
+backend/database.sqlite
+mobile/.git
+
 # Logs
 *.log
 npm-debug.log*
