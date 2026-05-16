@@ -2,25 +2,25 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import connectDB, { sequelize } from '../config/db.js';
+import connectDB, { sequelize } from './config/db.js';
 
 // Import models to ensure they are registered before sync
-import '../models/User.js';
-import '../models/MoodLog.js';
-import '../models/TherapySession.js';
-import '../models/Assessment.js';
-import '../models/WellnessContent.js';
-import '../models/JournalEntry.js';
-import '../models/Message.js';
+import './models/User.js';
+import './models/MoodLog.js';
+import './models/TherapySession.js';
+import './models/Assessment.js';
+import './models/WellnessContent.js';
+import './models/JournalEntry.js';
+import './models/Message.js';
 
-import userRoutes from '../routes/userRoutes.js';
-import moodRoutes from '../routes/moodRoutes.js';
-import therapyRoutes from '../routes/therapyRoutes.js';
-import assessmentRoutes from '../routes/assessmentRoutes.js';
-import contentRoutes from '../routes/contentRoutes.js';
-import adminRoutes from '../routes/adminRoutes.js';
-import journalRoutes from '../routes/journalRoutes.js';
-import messageRoutes from '../routes/messageRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import moodRoutes from './routes/moodRoutes.js';
+import therapyRoutes from './routes/therapyRoutes.js';
+import assessmentRoutes from './routes/assessmentRoutes.js';
+import contentRoutes from './routes/contentRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import journalRoutes from './routes/journalRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
 
 // Load env vars
 dotenv.config();

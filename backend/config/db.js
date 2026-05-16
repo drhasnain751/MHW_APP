@@ -5,14 +5,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// For Vercel, we use process.cwd() to find the root directory
-const dbPath = path.resolve(process.cwd(), 'database.sqlite');
-
 export const sequelize = new Sequelize({
+
   dialect: 'sqlite',
-  storage: dbPath,
+  storage: path.join(__dirname, '../database.sqlite'),
   logging: false,
 });
+
 
 
 const connectDB = async () => {
