@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE } from '../apiConfig';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -52,7 +53,7 @@ function Dashboard() {
   // Fetch moods
   const fetchMoods = async () => {
     try {
-      const res = await fetch('/api/moods');
+      const res = await fetch(`${API_BASE}/api/moods`);
       if (res.ok) {
         const data = await res.json();
         setMoodLogs(data);
@@ -64,7 +65,7 @@ function Dashboard() {
 
   const fetchAssessments = async () => {
     try {
-      const res = await fetch('/api/assessments');
+      const res = await fetch(`${API_BASE}/api/assessments`);
       if (res.ok) {
         const data = await res.json();
         setAssessments(data);
@@ -76,7 +77,7 @@ function Dashboard() {
 
   const fetchContent = async () => {
     try {
-      const res = await fetch('/api/content');
+      const res = await fetch(`${API_BASE}/api/content`);
       if (res.ok) {
         const data = await res.json();
         setWellnessContent(data);
@@ -89,8 +90,8 @@ function Dashboard() {
   const fetchTherapyData = async () => {
     try {
         const [therapistsRes, sessionsRes] = await Promise.all([
-            fetch('/api/therapy/therapists'),
-            fetch('/api/therapy/my-sessions')
+            fetch(`${API_BASE}/api/therapy/therapists`),
+            fetch(`${API_BASE}/api/therapy/my-sessions`)
         ]);
         if (therapistsRes.ok) setTherapists(await therapistsRes.json());
         if (sessionsRes.ok) setMySessions(await sessionsRes.json());
@@ -101,7 +102,7 @@ function Dashboard() {
 
   const fetchTherapistSessions = async () => {
     try {
-      const res = await fetch('/api/therapy/therapist-sessions');
+      const res = await fetch(`${API_BASE}/api/therapy/therapist-sessions`);
       if (res.ok) setTherapistSessions(await res.json());
     } catch (err) {
       setTherapistError('Error fetching sessions');
@@ -110,7 +111,7 @@ function Dashboard() {
 
   const handleUpdateSessionStatus = async (id, status) => {
     try {
-      const res = await fetch(`/api/therapy/session/${id}/status`, {
+      const res = await fetch(`${API_BASE}/api/therapy/session/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status })
@@ -136,7 +137,7 @@ function Dashboard() {
     setIsSubmitting(true);
     setError('');
     try {
-      const res = await fetch('/api/moods', {
+      const res = await fetch(`${API_BASE}/api/moods`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mood: newMood, intensity: Number(intensity), notes })
@@ -167,7 +168,7 @@ function Dashboard() {
     if (score >= 7) severity = 'High';
 
     try {
-      const res = await fetch('/api/assessments', {
+      const res = await fetch(`${API_BASE}/api/assessments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -189,7 +190,7 @@ function Dashboard() {
   const handleBookSession = async () => {
     setBookingStatus('Booking...');
     try {
-      const res = await fetch('/api/therapy/book', {
+      const res = await fetch(`${API_BASE}/api/therapy/book`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ therapistId: bookingTherapist, date: bookingDate })

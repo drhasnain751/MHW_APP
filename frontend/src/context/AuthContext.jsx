@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { API_BASE } from '../apiConfig';
 
 const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/users/auth', {
+      const response = await fetch(`${API_BASE}/api/users/auth`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -40,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await fetch('/api/users', {
+      const response = await fetch(`${API_BASE}/api/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
@@ -60,10 +61,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await fetch('/api/users/logout', { method: 'POST' });
+    await fetch(`${API_BASE}/api/users/logout`, { method: 'POST' });
     setUser(null);
     localStorage.removeItem('userInfo');
   };
+
 
   return (
     <AuthContext.Provider value={{ user, login, register, logout, loading }}>

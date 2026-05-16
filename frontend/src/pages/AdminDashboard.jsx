@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
+import { API_BASE } from '../apiConfig';
 import './Dashboard.css'; // Reusing dashboard styles
 
 function AdminDashboard() {
@@ -15,7 +16,7 @@ function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('/api/admin/stats');
+      const res = await fetch(`${API_BASE}/api/admin/stats`);
       if (res.ok) {
         setStats(await res.json());
       } else {
@@ -25,6 +26,7 @@ function AdminDashboard() {
       setError('Network error loading analytics');
     }
   };
+
 
   useEffect(() => {
     fetchStats();
