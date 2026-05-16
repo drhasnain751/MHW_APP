@@ -25,11 +25,24 @@ import messageRoutes from './routes/messageRoutes.js';
 // Load env vars
 dotenv.config();
 
-// Connect to database
-await connectDB();
-await sequelize.sync(); // Removed alter:true as it crashes SQLite on schema changes
-
 const app = express();
+
+// Middleware to ensure DB connection
+let isConnected = false;
+app.use(async (req, res, next) => {
+  if (!isConnected) {
+    try {
+      await connectDB();
+      await sequelize.sync();
+      isConnected = true;
+      console.log('Database initialized');
+    } catch (err) {
+      console.error('DB Init Error:', err);
+    }
+  }
+  next();
+});
+
 
 // Middleware
 app.use(express.json());
