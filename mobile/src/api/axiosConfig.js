@@ -8,11 +8,13 @@ import Constants from 'expo-constants';
 const hostUri = Constants.expoConfig?.hostUri;
 const machineIp = hostUri ? hostUri.split(':')[0] : 'localhost';
 
-let API_URL = `http://${machineIp}:5000/api`;
+// Use environment variable if available, otherwise fall back to local dev URL
+let API_URL = process.env.EXPO_PUBLIC_API_URL || `http://${machineIp}:5000/api`;
 
-if (Platform.OS === 'web') {
+if (Platform.OS === 'web' && !process.env.EXPO_PUBLIC_API_URL) {
   API_URL = 'http://localhost:5000/api';
 }
+
 
 const api = axios.create({
   baseURL: API_URL,
